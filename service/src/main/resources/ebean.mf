@@ -1,0 +1,3 @@
+entity-packages: org.ebean.monitor.domain
+top-packages: org.ebean.monitor
+profile-location: true

@@ -1,0 +1,9 @@
+# Reference - https://ebean.io/docs/testing
+ebean:
+  dumpMetricsOnShutdown: true
+  dumpMetricsOptions: loc,sql,hash
+  test:
+#    shutdown: remove # stop | remove
+    platform: h2 # h2, postgres
+    ddlMode: dropCreate # none | dropCreate |  migrations
+    dbName: ebmon
