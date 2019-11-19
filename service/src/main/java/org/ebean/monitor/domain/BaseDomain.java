@@ -7,7 +7,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 @MappedSuperclass
-public class DBase extends Model {
+public class BaseDomain extends Model {
 
   @Id
   private long id;

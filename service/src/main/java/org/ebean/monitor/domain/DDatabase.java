@@ -19,7 +19,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "metric_app_db")
 @UniqueConstraint(columnNames = {"app_id", "name"})
-public class DDatabase extends DBase {
+public class DDatabase extends BaseDomain {
 
   /**
    * The Application this database belongs to.

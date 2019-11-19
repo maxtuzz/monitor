@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Cache(nearCache = true, naturalKey = "key")
 @Entity
 @Table(name="metric")
-public class DMetric extends DBase {
+public class DMetric extends BaseDomain {
 
   /**
    * Derived concatenation of name + type + hash + loc

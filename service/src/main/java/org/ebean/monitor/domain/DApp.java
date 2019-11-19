@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Cache(nearCache = true, naturalKey = "name")
 @Entity
 @Table(name = "metric_app")
-public class DApp extends DBase {
+public class DApp extends BaseDomain {
 
   @Column(unique = true, nullable = false, length = 200)
   private String name;

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Cache(nearCache = true, naturalKey = "name")
 @Entity
 @Table(name = "metric_env")
-public class DEnv extends DBase {
+public class DEnv extends BaseDomain {
 
   /**
    * The unique environment name.

@@ -8,14 +8,14 @@ import javax.persistence.Table;
 import java.time.Instant;
 
 /**
- * Metric entry.
+ * Metric entries 10 minute rollup.
  */
 @DbPartition(mode = PartitionMode.DAY, property = "eventTime")
 @Entity
-@Table(name = "metric_entry")
-public class DMetricEntry extends BaseMetricEntry {
+@Table(name = "metric_rollup_m10")
+public class DMetricRollupM10 extends BaseMetricEntry {
 
-  public DMetricEntry(DMetric metric, DEnv env, DApp app, Instant eventTime, DDatabase db) {
+  public DMetricRollupM10(DMetric metric, DEnv env, DApp app, Instant eventTime, DDatabase db) {
     super(metric, env, app, eventTime, db);
   }
 }
