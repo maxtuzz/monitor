@@ -6,8 +6,12 @@ import org.ebean.monitor.domain.DEnv;
 import org.ebean.monitor.domain.DMetricEntry;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+/**
+ * Header level data for processing the metrics request.
+ */
 class IngestHeader {
 
   private final Instant eventTime;
@@ -16,10 +20,17 @@ class IngestHeader {
   private final List<IngestDbData> dbData;
 
   IngestHeader(Instant eventTime, DEnv env, DApp app, List<IngestDbData> dbData) {
-    this.eventTime = eventTime;
+    this.eventTime = truncate(eventTime);
     this.env = env;
     this.app = app;
     this.dbData = dbData;
+  }
+
+  /**
+   * Truncate the event time to the minute - expected ingestion per minute for DB metrics.
+   */
+  static Instant truncate(Instant eventTime) {
+    return eventTime.truncatedTo(ChronoUnit.MINUTES);
   }
 
   List<IngestDbData> getDbData() {

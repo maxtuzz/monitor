@@ -24,7 +24,7 @@ public class MetricRequest {
   public String environment;
 
   /**
-   * An Id for the server instance (like podId).
+   * An Id for the server instance (eg. K8 pod id).
    */
   public String instanceId;
 

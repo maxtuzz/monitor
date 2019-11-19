@@ -10,6 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.Instant;
 
+/**
+ * Metric entry.
+ */
 @DbPartition(mode = PartitionMode.DAY, property = "eventTime")
 @Entity
 @Table(name = "metric_entry")
@@ -27,11 +30,15 @@ public class DMetricEntry {
   @ManyToOne(optional = false)
   private final DApp app;
 
-  @ManyToOne(optional = false)
+  @ManyToOne
   private final DDatabase db;
 
+  /**
+   * Time of metric collection truncated to the minute.
+   */
   @NotNull
-  private final Instant eventTime; // truncated to secs = 0
+  private final Instant eventTime; // truncated to minute
+
 //  @NotNull
 //  private final Instant eventTimeActual; // collection time in millis
 

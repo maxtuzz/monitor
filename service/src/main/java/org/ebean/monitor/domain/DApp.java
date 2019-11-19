@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * The "Application" metrics relate to.
+ */
 @Cache(nearCache = true, naturalKey = "name")
 @Entity
 @Table(name = "metric_app")
