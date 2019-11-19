@@ -19,14 +19,13 @@ class IngestEntry {
     return this;
   }
 
-  public String getKey() {
+  String getKey() {
     return key;
   }
 
-  public MetricData getData() {
+  MetricData getData() {
     return data;
   }
-
 
   DMetric getMetric() {
     return metric;

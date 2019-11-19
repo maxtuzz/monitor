@@ -12,13 +12,16 @@
     <appender-ref ref="STDOUT"/>
   </root>
 
+  <logger name="org.ebean" level="DEBUG"/>
+
+  <logger name="io.dinject" level="INFO"/>
   <logger name="io.ebean" level="INFO"/>
 
   <!-- docker containers -->
-  <logger name="io.ebean.docker" level="TRACE"/>
+<!--  <logger name="io.ebean.docker" level="TRACE"/>-->
 
   <!-- ddl -->
-  <logger name="io.ebean.DDL" level="TRACE"/>
+<!--  <logger name="io.ebean.DDL" level="TRACE"/>-->
 
   <!-- sql and transaction logging -->
   <logger name="io.ebean.SQL" level="TRACE"/>
@@ -26,10 +29,7 @@
   <!-- <logger name="io.ebean.SUM" level="TRACE"/> -->
 
   <!-- l2 cache logging -->
-  <logger name="io.ebean.cache.QUERY" level="TRACE"/>
-  <logger name="io.ebean.cache.BEAN" level="TRACE"/>
-  <logger name="io.ebean.cache.COLL" level="TRACE"/>
-  <logger name="io.ebean.cache.NATKEY" level="TRACE"/>
+<!--  <logger name="io.ebean.cache" level="TRACE"/>-->
 
   <!-- elasticSearch query logging -->
   <!--<logger name="io.ebean.ELA" level="TRACE"/>-->

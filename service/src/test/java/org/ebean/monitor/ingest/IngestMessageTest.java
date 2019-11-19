@@ -13,14 +13,14 @@ import static org.ebean.monitor.ResourceHelp.metricRequest;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 
-public class IngestTest {
+public class IngestMessageTest {
 
-  private final Ingest ingest;
+  private final IngestMessage ingest;
 
-  public IngestTest() {
+  public IngestMessageTest() {
     ProcessHeader header = new ProcessHeader();
     ProcessMetrics lookupMetrics = new ProcessMetrics();
-    this.ingest = new Ingest(header, lookupMetrics);
+    this.ingest = new IngestMessage(header, lookupMetrics);
   }
 
   @Test

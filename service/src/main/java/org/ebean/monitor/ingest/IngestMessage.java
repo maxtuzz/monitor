@@ -4,14 +4,17 @@ import org.ebean.monitor.api.MetricRequest;
 
 import javax.inject.Singleton;
 
+/**
+ * Ingests the metrics request into the DB.
+ */
 @Singleton
-public class Ingest {
+public class IngestMessage {
 
   private final ProcessHeader lookup;
 
   private final ProcessMetrics lookupMetrics;
 
-  Ingest(ProcessHeader lookup, ProcessMetrics lookupMetrics) {
+  IngestMessage(ProcessHeader lookup, ProcessMetrics lookupMetrics) {
     this.lookup = lookup;
     this.lookupMetrics = lookupMetrics;
   }

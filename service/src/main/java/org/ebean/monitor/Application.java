@@ -10,14 +10,23 @@ public class Application {
 
   public static void main(String[] args) {
 
+    final List<WebRoutes> routes = SystemContext.getBeans(WebRoutes.class);
+
+    create(routes)
+      .start(8090);
+  }
+
+  static Javalin start(int port) {
+    return create(SystemContext.getBeans(WebRoutes.class))
+      .start(port);
+  }
+
+  static Javalin create(List<WebRoutes> routes) {
     final Javalin app = Javalin.create(config -> {
         config.showJavalinBanner = false;
         config.logIfServerNotStarted = true;
       }
     );
-
-    final List<WebRoutes> routes = SystemContext.getBeans(WebRoutes.class);
-    app.routes(() -> routes.forEach(WebRoutes::registerRoutes))
-      .start(8090);
+    return app.routes(() -> routes.forEach(WebRoutes::registerRoutes));
   }
 }
