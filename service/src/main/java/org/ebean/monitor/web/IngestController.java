@@ -33,7 +33,6 @@ class IngestController {
    */
   @Post
   void ingest(MetricRequest data) {
-    log.debug("queue data");
     // put it on the queue and ingest into DB in the background
     queue.put(data);
   }

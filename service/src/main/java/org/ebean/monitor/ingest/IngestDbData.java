@@ -42,7 +42,6 @@ class IngestDbData {
         log.error("Lost metric due to duplicate metric key? " + key);
       }
     }
-
     return entryMap.keySet();
   }
 

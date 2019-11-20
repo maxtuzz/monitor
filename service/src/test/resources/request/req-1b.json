@@ -9,7 +9,7 @@
         {
           "name": "met1",
           "type": "TXN",
-          "hash": "abc",
+          "hash": "abcDiff",
           "loc": "Location(43)",
           "sql": "select * from foo",
           "count": 43,
