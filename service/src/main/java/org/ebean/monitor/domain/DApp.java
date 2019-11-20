@@ -1,5 +1,6 @@
 package org.ebean.monitor.domain;
 
+import org.ebean.monitor.domain.finder.DAppFinder;
 import io.ebean.annotation.Cache;
 
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "metric_app")
 public class DApp extends BaseDomain {
+
+  public static final DAppFinder find = new DAppFinder();
 
   @Column(unique = true, nullable = false, length = 200)
   private String name;

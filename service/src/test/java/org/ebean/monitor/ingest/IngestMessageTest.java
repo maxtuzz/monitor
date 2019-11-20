@@ -11,7 +11,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.ebean.monitor.ResourceHelp.metricRequest;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
 
 public class IngestMessageTest {
 

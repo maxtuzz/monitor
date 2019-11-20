@@ -1,5 +1,6 @@
 package org.ebean.monitor.domain;
 
+import org.ebean.monitor.domain.finder.DEnvFinder;
 import io.ebean.annotation.Cache;
 
 import javax.persistence.Column;
@@ -16,6 +17,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "metric_env")
 public class DEnv extends BaseDomain {
+
+  public static final DEnvFinder find = new DEnvFinder();
 
   /**
    * The unique environment name.
