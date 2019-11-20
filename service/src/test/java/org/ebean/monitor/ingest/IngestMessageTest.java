@@ -51,12 +51,12 @@ public class IngestMessageTest {
 
     assertThat(met1Entries).as("different loc in req-1b").hasSize(2);
 
-    final List<DMetric> met1Locs = new QDMetric()
+    final List<DMetric> met1Hashes = new QDMetric()
       .name.eq("met1")
       .type.eq("TXN")
       .findList();
 
-    assertThat(met1Locs).hasSize(2);
+    assertThat(met1Hashes).hasSize(2);
   }
 
   @Test

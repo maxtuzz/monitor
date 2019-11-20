@@ -9,7 +9,7 @@
         {
           "name": "met1",
           "type": "TXN",
-          "hash": "abcDiff",
+          "hash": "met1AbcDiff",
           "loc": "Location(43)",
           "sql": "select * from foo",
           "count": 43,
@@ -20,7 +20,7 @@
         {
           "name": "met3",
           "type": "TXN",
-          "hash": "abc",
+          "hash": "met3abc",
           "loc": "Location(43)",
           "sql": "select * from foo",
           "count": 44,
