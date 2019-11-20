@@ -2,27 +2,14 @@ package org.ebean.monitor.api;
 
 public class AppDatabase {
 
-  private final String app;
-  private final String db;
+  private final String name;
 
-  public AppDatabase(String db, String app) {
-    this.app = app;
-    this.db = db;
+  public AppDatabase(String name) {
+    this.name = name;
   }
 
-  public String getApp() {
-    return app;
+  public String getName() {
+    return name;
   }
 
-  public String getDb() {
-    return db;
-  }
-
-  @Override
-  public String toString() {
-    return "AppDatabase{" +
-      "app='" + app + '\'' +
-      ", db='" + db + '\'' +
-      '}';
-  }
 }

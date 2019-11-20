@@ -5,6 +5,7 @@ import kong.unirest.GenericType;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.ebean.monitor.api.App;
+import org.ebean.monitor.api.AppDatabase;
 import org.ebean.monitor.api.Env;
 import org.ebean.monitor.api.ListResponse;
 import org.junit.Test;
@@ -42,6 +43,11 @@ public class IngestControllerTest {
         .extracting(App::getName)
         .contains("int1");
 
+      final ListResponse<AppDatabase> dbs = getDbs();
+      assertThat(dbs.getList())
+        .extracting(AppDatabase::getName)
+        .contains("int1.db");
+
     } finally {
       app.stop();
     }
@@ -69,6 +75,13 @@ public class IngestControllerTest {
     return Unirest.get("http://localhost:9091/api/app")
       .header("Content-Type", "application/json")
       .asObject(new GenericType<ListResponse<App>>() {})
+      .getBody();
+  }
+
+  private ListResponse<AppDatabase> getDbs() {
+    return Unirest.get("http://localhost:9091/api/database")
+      .header("Content-Type", "application/json")
+      .asObject(new GenericType<ListResponse<AppDatabase>>() {})
       .getBody();
   }
 }

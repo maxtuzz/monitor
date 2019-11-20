@@ -14,6 +14,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.ebean.monitor.domain.DDatabase.deriveName;
+
 /**
  * Process the header level properties like App, Environment etc.
  */
@@ -49,8 +51,7 @@ class ProcessHeader {
   private DDatabase lookupDb(DApp app, String dbName) {
 
     DDatabase db = new QDDatabase()
-      .app.eq(app)
-      .name.eq(dbName)
+      .name.eq(deriveName(app, dbName))
       .findOne();
 
     if (db == null) {
