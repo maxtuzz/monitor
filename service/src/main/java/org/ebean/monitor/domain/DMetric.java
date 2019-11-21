@@ -7,6 +7,7 @@ import io.ebean.annotation.Length;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -17,13 +18,14 @@ import javax.persistence.Table;
  */
 @Cache(nearCache = true, naturalKey = "key")
 @Entity
-@Table(name="metric")
+@Table(name = "metric")
 public class DMetric extends BaseDomain {
 
   /**
-   * Derived concatenation of name + type + hash + loc
+   * Derived as hash or concatenation of name + type.
+   * Used as unique lookup as part of ingestion.
    */
-  @Column(unique = true, nullable = false, length = 400)
+  @Column(unique = true, nullable = false, length = 110)
   private final String key;
 
   /**
@@ -40,13 +42,13 @@ public class DMetric extends BaseDomain {
   private final String type;
 
   /**
-   * Optional hash of the sql.
+   * The Application this metric belongs to if applicable.
    */
-  @Length(100)
-  private String hash;
+  @ManyToOne
+  private DApp app;
 
   /**
-   * The location of the metric expected to be class and line of code.
+   * The code location if supplied. Expected to be class and line of code.
    */
   @Length(150)
   private String loc;
@@ -75,12 +77,12 @@ public class DMetric extends BaseDomain {
     return type;
   }
 
-  public String getHash() {
-    return hash;
+  public DApp getApp() {
+    return app;
   }
 
-  public void setHash(String hash) {
-    this.hash = hash;
+  public void setApp(DApp app) {
+    this.app = app;
   }
 
   public String getLoc() {

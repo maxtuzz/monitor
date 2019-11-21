@@ -1,18 +1,16 @@
 package org.ebean.monitor.ingest;
 
-import org.ebean.monitor.domain.DDatabase;
-import org.ebean.monitor.domain.query.QDApp;
-import org.ebean.monitor.domain.query.QDDatabase;
-import org.ebean.monitor.domain.query.QDEnv;
 import org.ebean.monitor.api.MetricDbData;
 import org.ebean.monitor.api.MetricRequest;
 import org.ebean.monitor.domain.DApp;
+import org.ebean.monitor.domain.DDatabase;
 import org.ebean.monitor.domain.DEnv;
+import org.ebean.monitor.domain.query.QDApp;
+import org.ebean.monitor.domain.query.QDDatabase;
+import org.ebean.monitor.domain.query.QDEnv;
 
 import javax.inject.Singleton;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.ebean.monitor.domain.DDatabase.deriveName;
 
@@ -31,12 +29,11 @@ class ProcessHeader {
     final DEnv env = lookupEnv(request.environment);
     final DApp app = lookupApp(request.appName);
 
-    List<IngestDbData> dbData = new ArrayList<>(request.dbs.size());
+    IngestHeader header = new IngestHeader(eventTime, env, app);
     for (MetricDbData db : request.dbs) {
-      dbData.add(new IngestDbData(db, lookupDb(app, dbName(db.db))));
+      header.add(db, lookupDb(app, dbName(db.db)));
     }
-
-    return new IngestHeader(eventTime, env, app, dbData);
+    return header;
   }
 
   private static String dbName(String db) {
