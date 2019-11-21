@@ -1,16 +1,18 @@
 package org.ebean.monitor.ingest;
 
+import io.ebean.DB;
 import org.ebean.monitor.api.MetricData;
 import org.ebean.monitor.api.MetricDbData;
-import org.ebean.monitor.domain.DApp;
 import org.ebean.monitor.domain.DDatabase;
 import org.ebean.monitor.domain.DMetric;
 import org.ebean.monitor.domain.DMetricEntry;
+import org.ebean.monitor.domain.query.QDMetric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,27 +41,6 @@ class IngestDbData {
     return mdb;
   }
 
-  Set<String> metricKeys() {
-
-    for (MetricData data : metricDbData.metrics) {
-      final String key = MetricKey.of(data);
-      final IngestEntry dup = entryMap.put(key, new IngestEntry(key, data));
-      if (dup != null) {
-        log.error("Lost metric due to duplicate metric key? " + key);
-      }
-    }
-    return entryMap.keySet();
-  }
-
-
-  List<IngestEntry> entriesFor(Set<String> missingKeys) {
-    List<IngestEntry> list = new ArrayList<>(missingKeys.size());
-    for (String key : missingKeys) {
-      list.add(entryMap.get(key));
-    }
-    return list;
-  }
-
   /**
    * Assign DMetric and return list for persisting.
    */
@@ -82,7 +63,7 @@ class IngestDbData {
     return header.createMetricEntry(this, ingestEntry);
   }
 
-  Map<String, DMetric> createMissing(Set<String> missingKeys) {
+  private Map<String, DMetric> createMissing(Set<String> missingKeys) {
       return createNewMetrics(entriesFor(missingKeys));
   }
 
@@ -100,13 +81,63 @@ class IngestDbData {
   private DMetric createMetric(IngestEntry entry) {
 
     final MetricData data = entry.getData();
-    DMetric metric = new DMetric(entry.getKey(), data.name, data.type);
+    DMetric metric = new DMetric(header.getApp(), entry.getKey(), data.name, data.type);
     metric.setSql(data.sql);
-    if (data.loc != null) {
-      metric.setLoc(data.loc);
-      final DApp app = header.getApp();
+    metric.setLoc(data.loc);
+    return metric;
+  }
+
+  Map<String, DMetric> buildMap() {
+
+    final Set<String> keys = metricKeys();
+    final Map<String, DMetric> metricMap = lookupExistingMetrics(keys);
+
+    if (keys.size() > metricMap.size()) {
+      Set<String> missingKeys = missingKeys(keys, metricMap);
+
+      final Map<String, DMetric> newMetrics = createMissing(missingKeys);
+      DB.saveAll(newMetrics.values());
+      metricMap.putAll(newMetrics);
     }
 
-    return metric;
+    return metricMap;
+  }
+
+  private Map<String, DMetric> lookupExistingMetrics(Set<String> keys) {
+
+    return new QDMetric()
+      .key.in(keys)
+      .key.asMapKey()
+      .findMap();
+  }
+
+  private Set<String> missingKeys(Set<String> keys, Map<String, DMetric> metricMap) {
+    Set<String> missingKeys = new HashSet<>();
+    for (String key : keys) {
+      if (!metricMap.containsKey(key)) {
+        missingKeys.add(key);
+      }
+    }
+    return missingKeys;
+  }
+
+  private Set<String> metricKeys() {
+
+    for (MetricData data : metricDbData.metrics) {
+      final String key = MetricKey.of(data);
+      final IngestEntry dup = entryMap.put(key, new IngestEntry(key, data));
+      if (dup != null) {
+        log.error("Lost metric due to duplicate metric key? " + key);
+      }
+    }
+    return entryMap.keySet();
+  }
+
+  private List<IngestEntry> entriesFor(Set<String> missingKeys) {
+    List<IngestEntry> list = new ArrayList<>(missingKeys.size());
+    for (String key : missingKeys) {
+      list.add(entryMap.get(key));
+    }
+    return list;
   }
 }

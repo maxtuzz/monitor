@@ -1,6 +1,7 @@
 package org.ebean.monitor.domain;
 
 import io.ebean.annotation.DbForeignKey;
+import io.ebean.annotation.Index;
 import io.ebean.annotation.NotNull;
 
 import javax.persistence.Id;
@@ -36,6 +37,7 @@ public class BaseMetricEntry {
   /**
    * Time of metric collection truncated to the minute.
    */
+  @Index
   @NotNull
   private final Instant eventTime; // truncated to minute
 

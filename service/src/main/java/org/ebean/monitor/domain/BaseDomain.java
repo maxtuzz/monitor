@@ -10,24 +10,24 @@ import javax.persistence.Version;
 public class BaseDomain extends Model {
 
   @Id
-  private long id;
+  private int id;
 
   @Version
-  private long version;
+  private int version;
 
-  public long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 
-  public long getVersion() {
+  public int getVersion() {
     return version;
   }
 
-  public void setVersion(long version) {
+  public void setVersion(int version) {
     this.version = version;
   }
 }

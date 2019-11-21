@@ -15,7 +15,7 @@ import javax.persistence.Table;
  */
 @Cache(nearCache = true, naturalKey = "name")
 @Entity
-@Table(name = "metric_env")
+@Table(name = "env")
 public class DEnv extends BaseDomain {
 
   public static final DEnvFinder find = new DEnvFinder();

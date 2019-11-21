@@ -1,25 +1,34 @@
+##
+## Postgres setup - To use local docker instance see src/test/main/StartPostgresDocker.main()
+##
+ebean:
+  dbSchema: ebean_monitor
+  migration:
+    run: true
+
+db:
+  user: ebean_monitor
+  password: test
+  url: jdbc:postgresql://localhost:7432/ebean_monitor
+
 datasource:
   db:
-    username: sa
-    password: sa
-    url: jdbc:h2:mem:myapp
-    driver: org.h2.Driver
+    username: ${db.user:ebean_monitor}
+    password: ${db.password:test}
+#    url: ${db.url:jdbc:postgresql://localhost:7432/ebean_monitor}
+    url: jdbc:postgresql://localhost:7432/ebean_monitor
+    driver: ${db.driver:org.postgresql.Driver}
 
+
+## H2 setup - In memory
+#datasource:
 #  db:
-#    username: my_app
-#    password: ${db.password:test}
-#    url: jdbc:postgresql://localhost:6432/my_app
-#    driver: org.postgresql.Driver
-
-#ebean:
-#  migration:
-#   run: true
+#    username: sa
+#    password: sa
+#    url: jdbc:h2:mem:myapp
+#    driver: org.h2.Driver
 #
-#  docstore:
-#    url: http://127.0.0.1:9200
-#    active: true
-
-ebean:
-  ddl:
-    generate: true
-    run: true
+#ebean:
+#  ddl:
+#    generate: true
+#    run: true

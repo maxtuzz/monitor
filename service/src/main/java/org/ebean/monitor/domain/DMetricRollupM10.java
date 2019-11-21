@@ -1,8 +1,5 @@
 package org.ebean.monitor.domain;
 
-import io.ebean.annotation.DbPartition;
-import io.ebean.annotation.PartitionMode;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.Instant;
@@ -10,7 +7,7 @@ import java.time.Instant;
 /**
  * Metric entries 10 minute rollup.
  */
-@DbPartition(mode = PartitionMode.DAY, property = "eventTime")
+//@DbPartition(mode = PartitionMode.WEEK, property = "eventTime")
 @Entity
 @Table(name = "metric_rollup_m10")
 public class DMetricRollupM10 extends BaseMetricEntry {

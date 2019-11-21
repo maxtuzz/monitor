@@ -1,5 +1,6 @@
 package org.ebean.monitor.ingest;
 
+import io.ebeaninternal.server.util.Md5;
 import org.ebean.monitor.api.MetricData;
 
 class MetricKey {
@@ -12,7 +13,7 @@ class MetricKey {
       // orm queries supply unique hash
       return metric.hash;
     } else {
-      return metric.name + "|" + metric.type;
+      return Md5.hash(metric.name + "|" + metric.type);
     }
   }
 

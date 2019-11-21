@@ -3,8 +3,8 @@ package org.ebean.monitor.domain;
 import io.ebean.annotation.Cache;
 import io.ebean.annotation.Index;
 import io.ebean.annotation.Length;
+import io.ebean.annotation.NotNull;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -16,16 +16,25 @@ import javax.persistence.Table;
  * The unique key for metric is a combination of name + type + hash + loc.
  * </p>
  */
-@Cache(nearCache = true, naturalKey = "key")
+@Cache(nearCache = true, naturalKey = {"app", "key"})
 @Entity
-@Table(name = "metric")
+@Table(name = "app_metric")
 public class DMetric extends BaseDomain {
+
+  /**
+   * The Application this metric belongs to.
+   */
+  @ManyToOne
+  @NotNull
+  private final DApp app;
 
   /**
    * Derived as hash or concatenation of name + type.
    * Used as unique lookup as part of ingestion.
    */
-  @Column(unique = true, nullable = false, length = 110)
+  @Index
+  @NotNull
+  @Length(40)
   private final String key;
 
   /**
@@ -42,12 +51,6 @@ public class DMetric extends BaseDomain {
   private final String type;
 
   /**
-   * The Application this metric belongs to if applicable.
-   */
-  @ManyToOne
-  private DApp app;
-
-  /**
    * The code location if supplied. Expected to be class and line of code.
    */
   @Length(150)
@@ -59,7 +62,8 @@ public class DMetric extends BaseDomain {
   @Lob
   private String sql;
 
-  public DMetric(String key, String name, String type) {
+  public DMetric(DApp app, String key, String name, String type) {
+    this.app = app;
     this.key = key;
     this.name = name;
     this.type = type;
@@ -79,10 +83,6 @@ public class DMetric extends BaseDomain {
 
   public DApp getApp() {
     return app;
-  }
-
-  public void setApp(DApp app) {
-    this.app = app;
   }
 
   public String getLoc() {

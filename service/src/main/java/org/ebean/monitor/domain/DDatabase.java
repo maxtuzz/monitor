@@ -1,9 +1,9 @@
 package org.ebean.monitor.domain;
 
-import org.ebean.monitor.domain.finder.DDatabaseFinder;
 import io.ebean.annotation.Cache;
 import io.ebean.annotation.Length;
 import io.ebean.annotation.NotNull;
+import org.ebean.monitor.domain.finder.DDatabaseFinder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,10 +18,17 @@ import javax.persistence.Table;
  */
 @Cache(nearCache = true, naturalKey = {"fullName"})
 @Entity
-@Table(name = "metric_app_db")
+@Table(name = "app_db")
 public class DDatabase extends BaseDomain {
 
   public static final DDatabaseFinder find = new DDatabaseFinder();
+
+  /**
+   * The Application this database belongs to.
+   */
+  @ManyToOne
+  @NotNull
+  private final DApp app;
 
   /**
    * The full database name (eg. "myapp.db")
@@ -32,13 +39,6 @@ public class DDatabase extends BaseDomain {
   @Length(40)
   @NotNull
   private String shortName;
-
-  /**
-   * The Application this database belongs to.
-   */
-  @ManyToOne
-  @NotNull
-  private final DApp app;
 
   public DDatabase(DApp app, String shortName) {
     this.name = deriveName(app, shortName);

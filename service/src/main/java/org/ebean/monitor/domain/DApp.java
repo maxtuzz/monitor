@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Cache(nearCache = true, naturalKey = "name")
 @Entity
-@Table(name = "metric_app")
+@Table(name = "app")
 public class DApp extends BaseDomain {
 
   public static final DAppFinder find = new DAppFinder();
